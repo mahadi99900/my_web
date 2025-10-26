@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>my visiting card
+    <title>My visiting card
     </title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Poppins:wght@400;600&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&family=Poppins:wght@400;600&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
         /* CSS এর মূল অংশ */
@@ -28,7 +28,7 @@
             align-items: center;
             min-height: 100vh;
             
-            /* নতুন: ডাইনামিক কালার চেঞ্জ ব্যাকগ্রাউন্ড */
+            /* ডাইনামিক কালার চেঞ্জ ব্যাকগ্রাউন্ড */
             background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
             background-size: 400% 400%;
             animation: color-cycle 15s ease infinite; /* ধীরে ধীরে রঙ পরিবর্তন */
@@ -54,13 +54,12 @@
             padding: 25px;
             text-align: center;
             position: relative;
-            /* 3D অ্যানিমেশন সরানো হয়েছে */
             transition: all 0.3s ease-in-out; 
             overflow: hidden; 
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* স্মার্ট গ্লোয়িং বর্ডার (3D গ্লো রাখা হয়েছে) */
+        /* গ্লোয়িং বর্ডার অ্যানিমেশন */
         .vcard-container::before {
             content: '';
             position: absolute;
@@ -72,11 +71,17 @@
             background-size: 400% 400%;
             border-radius: 25px; 
             z-index: -1;
-            filter: blur(10px); /* আরও বেশি ব্লার, আরও স্মার্ট লুক */
+            filter: blur(10px); 
             opacity: 0.5;
             animation: glowing-border 8s ease infinite alternate; 
         }
         
+        @keyframes glowing-border {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         /* ছবির অংশ */
         .profile-pic-container {
             width: 150px;
@@ -90,7 +95,7 @@
         }
 
         .profile-pic-container:hover {
-            transform: scale(1.05); /* হালকা স্কেল */
+            transform: scale(1.05); 
         }
 
         .profile-pic {
@@ -102,19 +107,19 @@
         /* নাম এবং পেশার অংশ */
         .name {
             font-family: 'Montserrat', sans-serif;
-            font-size: 2.4em; /* আরও বড় নাম */
+            font-size: 2.4em; 
             margin-bottom: 5px;
-            font-weight: 900; /* আরও গাঢ় */
+            font-weight: 900; 
             color: var(--name-color); 
-            letter-spacing: 1px; /* অক্ষরের মধ্যে দূরত্ব */
+            letter-spacing: 1px; 
         }
         
         .status-container {
-            margin-bottom: 20px;
+            margin-bottom: 15px; 
         }
 
         .designation-main {
-            font-family: 'Roboto Mono', monospace; /* কোডার ফন্ট */
+            font-family: 'Roboto Mono', monospace; 
             font-size: 1.1em;
             font-weight: 500;
             color: var(--python-color); /* উজ্জ্বল হলুদ */
@@ -123,38 +128,33 @@
             align-items: center;
             gap: 10px;
             margin-bottom: 3px;
-            text-transform: uppercase; /* সব বড় হাতে */
+            text-transform: uppercase; 
         }
         
-        /* আসল Python লোগো (CSS ব্যবহার করে কাস্টম লোগো) */
-        .python-logo-custom {
-            display: inline-block;
-            line-height: 1;
-        }
-        .python-logo-custom::before {
-            content: "\f3e2"; /* Font Awesome Python icon */
-            font-family: 'Font Awesome 6 Brands';
-            font-size: 1.4em;
-            color: #FFD43B; /* Yellow part */
-            margin-right: -2px;
-        }
-        .python-logo-custom::after {
-            content: "\f3e2"; /* Font Awesome Python icon */
-            font-family: 'Font Awesome 6 Brands';
-            font-size: 1.4em;
-            color: #4B8BBE; /* Blue part (for a two-tone look, though single icon is common) */
-            transform: rotate(180deg) scaleX(-1);
-            display: inline-block;
-            margin-left: -2px;
-        }
-        /* আসল Python লোগোর জন্য, সহজ করার জন্য শুধু একটি আইকন ব্যবহার করা হলো এবং উজ্জ্বল রঙ দেওয়া হলো */
         .designation-main i.fab.fa-python {
             color: #4B8BBE; /* Python Blue */
             font-size: 1.3em;
             text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
         }
 
+        /* প্রফেশন: ক্লাস ১০ */
         .designation-sub {
+            font-size: 1em;
+            color: #4B8BBE; /* উজ্জ্বল নীল */
+            font-weight: 600;
+            margin-bottom: 5px;
+            /* নতুন: "Profession:" লেবেল যুক্ত করা */
+        }
+        .designation-sub::before {
+            content: "PROFESSION: ";
+            color: var(--text-color); /* হালকা ধূসর */
+            font-weight: 400;
+            font-size: 0.9em;
+            margin-right: 5px;
+        }
+
+        /* অতিরিক্ত স্ট্যাটাস (শিক্ষার্থী) */
+        .current-status {
             font-size: 0.9em;
             color: var(--text-color);
             font-style: italic;
@@ -194,9 +194,9 @@
         }
 
         .contact-btn:hover {
-            transform: translateY(-3px); /* সামান্য উপরে উঠে আসবে */
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.8); /* শ্যাডো আরও গভীর */
-            filter: brightness(1.1); /* হোভারে আরও উজ্জ্বল হবে */
+            transform: translateY(-3px); 
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.8); 
+            filter: brightness(1.1); 
         }
         
         .contact-btn i {
@@ -207,7 +207,7 @@
         /* লোগোর কালার এবং বাটন পটভূমি */
         .email { background-color: var(--primary-color); }
         .github { background-color: #fff; color: #1e1e1e; }
-        .github i { color: #1e1e1e; } /* GitHub আইকন কালো */
+        .github i { color: #1e1e1e; }
         .whatsapp { background-color: #25D366; }
         .facebook { background-color: #1877F2; }
         .telegram { background-color: #0088cc; }
@@ -234,10 +234,13 @@
             <div class="status-container">
                 <div class="designation-main">
                     <i class="fab fa-python"></i> 
-                    PYTHON PROGRAMMER
+                    STUDENT OF PYTHON
                 </div>
                 <div class="designation-sub">
-                    Student
+                    CLASS 10
+                </div>
+                <div class="current-status">
+                    High School Education
                 </div>
             </div>
 
@@ -266,8 +269,7 @@
     </div>
 
     <script>
-        // 3D অ্যানিমেশন সরানো হয়েছে, শুধু হোভার এবং ক্লিক ট্রানজিশন থাকবে।
-        // কোডটিকে স্থির (Static) এবং ফোকাসড রাখা হয়েছে।
+        // স্থির এবং মসৃণ ডিজাইনের জন্য কোনো JavaScript অ্যানিমেশন নেই।
     </script>
 
 </body>
