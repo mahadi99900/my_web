@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahadi Hasan - Modern Digital Card</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        /* CSS এর মূল অংশ */
+        :root {
+            --primary-color: #007BFF; /* নীল */
+            --secondary-color: #28a745; /* সবুজ (যদি প্রয়োজন হয়) */
+            --background-gradient-start: #f0f4f8; /* হালকা গ্রেডিয়েন্ট শুরু */
+            --background-gradient-end: #c9d6df;   /* হালকা গ্রেডিয়েন্ট শেষ */
+            --card-background: #ffffff; /* কার্ডের পটভূমি */
+            --text-color: #333333; /* লেখার রঙ */
+            --python-color: #306998; /* পাইথনের রঙ */
+            --shadow-base: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.25); /* হোভারের জন্য গাঢ় শ্যাডো */
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif; /* উন্নত ফন্ট */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--background-gradient-start), var(--background-gradient-end));
+            color: var(--text-color);
+            overflow-x: hidden; /* অনুভূমিক স্ক্রল বন্ধ */
+        }
+
+        /* কার্ডের মূল অংশ */
+        .vcard-container {
+            width: 90%;
+            max-width: 400px;
+            background-color: var(--card-background);
+            border-radius: 20px;
+            box-shadow: var(--shadow-base);
+            padding: 25px;
+            text-align: center;
+            position: relative;
+            transform-style: preserve-3d; /* 3D অ্যানিমেশনের জন্য */
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1); /* মসৃণ ট্রানজিশন */
+            perspective: 1000px; /* 3D এর গভীরতা */
+            overflow: hidden; /* গ্লোয়িং বর্ডার অ্যানিমেশনের জন্য */
+        }
+
+        /* স্মার্ট গ্লোয়িং বর্ডার (CSS-only) */
+        .vcard-container::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, var(--primary-color), var(--python-color), var(--primary-color));
+            background-size: 400% 400%;
+            border-radius: 25px; /* কার্ডের চেয়ে একটু বড় */
+            z-index: -1;
+            filter: blur(8px); /* গ্লো ইফেক্ট */
+            opacity: 0.6;
+            transition: opacity 0.5s ease-in-out;
+            animation: glowing-border 8s ease infinite alternate; /* অ্যানিমেশন */
+        }
+        
+        .vcard-container:hover::before {
+            opacity: 0.9;
+        }
+
+        @keyframes glowing-border {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* ছবির অংশ */
+        .profile-pic-container {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid var(--primary-color);
+            box-shadow: 0 0 15px rgba(0, 123, 255, 0.5); /* গ্লো ইফেক্ট */
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* মসৃণ */
+        }
+
+        .profile-pic-container:hover {
+            transform: scale(1.08) rotate(5deg);
+        }
+
+        .profile-pic {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* নাম এবং পেশার অংশ */
+        .name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.2em;
+            margin-bottom: 5px;
+            font-weight: 800;
+            color: var(--primary-color);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .status-container {
+            margin-bottom: 20px;
+        }
+
+        .designation-main {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: var(--python-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 3px;
+        }
+        
+        .designation-sub {
+            font-size: 0.9em;
+            color: #6c757d;
+            font-style: italic;
+        }
+
+        .location {
+            font-size: 1em;
+            color: #6c757d;
+            margin-bottom: 25px;
+        }
+
+        /* Contact Me বাটন এবং লোগোর অংশ */
+        .contact-section {
+            padding-top: 25px;
+            border-top: 1px solid #eeeeee;
+        }
+
+        .contact-links {
+            display: grid; /* গ্রিড ব্যবহার করে আরও কন্ট্রোল */
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* ডেস্কটপে ২ কলাম, মোবাইলে ১ কলাম */
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .contact-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 15px;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: 600;
+            text-decoration: none;
+            color: white; /* বাটনের লেখার রঙ সাদা */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* মসৃণ ট্রানজিশন */
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-5px) scale(1.05); /* উপরের দিকে বাউন্স ও সামান্য বড় */
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .contact-btn i {
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+
+        /* লোগোর জন্য কালার */
+        .email { background-color: var(--primary-color); }
+        .github { background-color: #333; } /* GitHub এর জন্য গাঢ় ধূসর */
+        .whatsapp { background-color: #25D366; }
+        .facebook { background-color: #1877F2; }
+        .telegram { background-color: #0088cc; }
+
+
+        /* প্রতিক্রিয়াশীল নকশা (Responsive Design) */
+        @media (max-width: 600px) {
+            .contact-links {
+                grid-template-columns: 1fr; /* মোবাইলে এক কলাম */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="vcard-container" id="vcard">
+        <div class="profile-pic-container">
+            <img src="profile.webp" alt="Mahadi Hasan Profile Picture" class="profile-pic">
+        </div>
+
+        <div class="info-section">
+            <div class="name">Mahadi Hasan</div>
+            
+            <div class="status-container">
+                <div class="designation-main">
+                    <i class="fab fa-python"></i> 
+                    Python Programmer
+                </div>
+                <div class="designation-sub">
+                    Student
+                </div>
+            </div>
+
+            <div class="location"><i class="fas fa-map-marker-alt"></i> Savar, Dhaka, Bangladesh</div>
+        </div>
+
+        <div class="contact-section">
+            <div class="contact-links">
+                <a href="mailto:islammdmahadi943@gmail.com" class="contact-btn email" title="Email">
+                    <i class="fas fa-envelope"></i> Email
+                </a>
+                <a href="https://github.com/Mahadi99900" target="_blank" class="contact-btn github" title="GitHub">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+                <a href="https://wa.me/+8801701902728" target="_blank" class="contact-btn whatsapp" title="WhatsApp">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </a>
+                <a href="https://www.facebook.com/mahdibiniqbal999" target="_blank" class="contact-btn facebook" title="Facebook">
+                    <i class="fab fa-facebook-f"></i> Facebook
+                </a>
+                <a href="https://t.me/mahadihasan099" target="_blank" class="contact-btn telegram" title="Telegram">
+                    <i class="fab fa-telegram-plane"></i> Telegram
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- স্মুথ 3D প্যারাল্যাক্স অ্যানিমেশন কোড (JavaScript ব্যবহার করে) ---
+        const card = document.getElementById('vcard');
+
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            // মাউসের অবস্থান থেকে কার্ডের কেন্দ্রবিন্দুর দূরত্ব
+            const x = e.clientX - rect.left - centerX;
+            const y = e.clientY - rect.top - centerY;
+            
+            // ঘুর্ণন কোণ নির্ধারণ (কম মান মানে হালকা প্রভাব)
+            const rotateX = (-y / 30); // 30 প্যারামিটারটি পরিবর্তনের মাধ্যমে প্রভাবের গভীরতা পরিবর্তন করা যেতে পারে
+            const rotateY = (x / 30);
+
+            // কার্ডে 3D ট্রান্সফর্ম প্রয়োগ
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+            card.style.boxShadow = `
+                ${x / 10}px ${y / 10}px 30px rgba(0, 0, 0, 0.2), /* ডাইনামিক শ্যাডো */
+                0 0 0 1px rgba(0, 0, 0, 0.05) /* হালকা বর্ডার */
+            `;
+        });
+
+        // মাউস কার্ড থেকে সরিয়ে নিলে স্বাভাবিক অবস্থায় ফিরে আসবে
+        card.addEventListener('mouseleave', () => {
+            // মসৃণভাবে স্বাভাবিক অবস্থায় ফিরে আসার জন্য ট্রানজিশন যোগ করা
+            card.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.5s ease-in-out';
+            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
+            card.style.boxShadow = 'var(--shadow-base)';
+            
+            // ট্রানজিশন শেষ হওয়ার পর মসৃণতা পুনরায় চালু করা (পরবর্তী মাউস ইভেন্টের জন্য)
+            setTimeout(() => {
+                card.style.transition = 'all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1)';
+            }, 500);
+        });
+    </script>
+
+</body>
+</html>
